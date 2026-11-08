@@ -9,16 +9,16 @@
   <img src="https://img.shields.io/badge/-Floci-25b7a4?style=for-the-badge" alt="Floci">
   <img src="https://img.shields.io/badge/-GitHub%20Actions-2088ff?style=for-the-badge&logo=githubactions&logoColor=white" alt="GitHub Actions">
 <br>
-  <a href="https://github.com/DavidTorro/aws-iam-governance-lab/actions/workflows/ci.yml">
+  <a href="https://github.com/DavidTorro/aws-floci-cloud-lab/actions/workflows/ci.yml">
     <img src="https://img.shields.io/badge/CI-GitHub%20Actions-2088ff?style=for-the-badge&logo=githubactions&logoColor=white" alt="CI en GitHub Actions">
   </a>
-  <a href="https://github.com/DavidTorro/aws-iam-governance-lab/actions/workflows/web.yml">
+  <a href="https://github.com/DavidTorro/aws-floci-cloud-lab/actions/workflows/web.yml">
     <img src="https://img.shields.io/badge/web-Floci%20%E2%86%92%20AWS-ff9900?style=for-the-badge&logo=amazons3&logoColor=white" alt="Despliegue de la web">
   </a>
-  <a href="https://davidtorro.github.io/aws-iam-governance-lab/">
+  <a href="https://davidtorro.github.io/aws-floci-cloud-lab/">
     <img src="https://img.shields.io/badge/docs-MkDocs-526cfe?style=for-the-badge&logo=materialformkdocs&logoColor=white" alt="Documentación">
   </a>
-  <a href="https://davidtorro.github.io/aws-iam-governance-lab/pdf/aws-iam-governance-lab.pdf">
+  <a href="https://davidtorro.github.io/aws-floci-cloud-lab/pdf/aws-floci-cloud-lab.pdf">
     <img src="https://img.shields.io/badge/memoria-PDF-b30b00?style=for-the-badge&logo=adobeacrobatreader&logoColor=white" alt="Memoria en PDF">
   </a>
   <a href="https://github.com/DavidTorro">
@@ -27,7 +27,7 @@
 
 </div>
 
-# AWS IAM Governance Lab
+# AWS Floci Cloud Lab
 
 Práctica de NextGen Solutions en dos partes, resuelta como **infraestructura como código con Terraform** y siguiendo la organización de [aws-iam-security-lab](https://github.com/DavidTorro/aws-iam-security-lab):
 
@@ -115,7 +115,7 @@ python3 -m venv .venv
 ENABLE_PDF_EXPORT=1 .venv/bin/mkdocs build --strict
 ```
 
-El PDF generado queda en `site/pdf/aws-iam-governance-lab.pdf`; la [copia final de la memoria](./output/pdf/aws-iam-governance-lab.pdf) se incluye en el repositorio. GitHub Actions valida Terraform, las políticas y la documentación; `Web` prueba y despliega la web, y el despliegue de Pages se ejecuta manualmente desde `Documentación`.
+El PDF generado queda en `site/pdf/aws-floci-cloud-lab.pdf`; la [copia final de la memoria](./output/pdf/aws-floci-cloud-lab.pdf) se incluye en el repositorio. GitHub Actions valida Terraform, las políticas y la documentación; `Web` prueba y despliega la web, y el despliegue de Pages se ejecuta manualmente desde `Documentación`.
 
 ## Estructura
 

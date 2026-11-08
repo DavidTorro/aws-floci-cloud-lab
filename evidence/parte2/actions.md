@@ -4,10 +4,10 @@ Ejecuciones reales de `.github/workflows/web.yml` en `main` el 8 de noviembre de
 
 | Fase | Commit | Ejecución | 1. Prueba en Floci | 2. Despliegue en AWS |
 | --- | --- | --- | --- | --- |
-| 3. Primera versión (merge de la PR #5) | `344908a` | [Web #1](https://github.com/DavidTorro/aws-iam-governance-lab/actions/runs/42516989560) | ✅ success | ✅ success (intento 3) |
-| 4.1 Añado mi nombre | `0afed6c` | [Web #2](https://github.com/DavidTorro/aws-iam-governance-lab/actions/runs/42517612497) | ✅ success | ✅ success |
-| 4.2 Error a propósito | `2144944` | [Web #3](https://github.com/DavidTorro/aws-iam-governance-lab/actions/runs/42517814371) | ❌ failure | ⏭️ skipped |
-| 4.2 Revert | `02c17f6` | [Web #4](https://github.com/DavidTorro/aws-iam-governance-lab/actions/runs/42517932022) | ✅ success | ✅ success |
+| 3. Primera versión (merge de la PR #5) | `344908a` | [Web #1](https://github.com/DavidTorro/aws-floci-cloud-lab/actions/runs/42516989560) | ✅ success | ✅ success (intento 3) |
+| 4.1 Añado mi nombre | `0afed6c` | [Web #2](https://github.com/DavidTorro/aws-floci-cloud-lab/actions/runs/42517612497) | ✅ success | ✅ success |
+| 4.2 Error a propósito | `2144944` | [Web #3](https://github.com/DavidTorro/aws-floci-cloud-lab/actions/runs/42517814371) | ❌ failure | ⏭️ skipped |
+| 4.2 Revert | `02c17f6` | [Web #4](https://github.com/DavidTorro/aws-floci-cloud-lab/actions/runs/42517932022) | ✅ success | ✅ success |
 
 ## Detalles
 

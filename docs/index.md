@@ -1,4 +1,4 @@
-# AWS IAM Governance Lab
+# AWS Floci Cloud Lab
 
 Memoria de las dos partes de la práctica de NextGen Solutions, resueltas con Terraform:
 

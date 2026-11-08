@@ -1,6 +1,6 @@
 # Ejecución por fases
 
-Todas las salidas proceden de ejecuciones reales del 8 de noviembre de 2026. Los logs completos están en [`evidence/parte2/`](https://github.com/DavidTorro/aws-iam-governance-lab/tree/main/evidence/parte2). En los errores de AWS se han ocultado los identificadores de cuenta y de organización.
+Todas las salidas proceden de ejecuciones reales del 8 de noviembre de 2026. Los logs completos están en [`evidence/parte2/`](https://github.com/DavidTorro/aws-floci-cloud-lab/tree/main/evidence/parte2). En los errores de AWS se han ocultado los identificadores de cuenta y de organización.
 
 ## Fase 1: la web en el PC
 
@@ -59,7 +59,7 @@ OK. Tu web está en: http://nextgen-david-torro.s3-website-us-east-1.amazonaws.c
 
 ## Fase 3: automatizar con GitHub
 
-Se guardó el bloque de credenciales de Learner Lab como secret `AWS_CREDENTIALS` del repositorio. El código entró en `main` con la [PR #5](https://github.com/DavidTorro/aws-iam-governance-lab/pull/5), y ese merge lanzó el workflow `Web`.
+Se guardó el bloque de credenciales de Learner Lab como secret `AWS_CREDENTIALS` del repositorio. El código entró en `main` con la [PR #5](https://github.com/DavidTorro/aws-floci-cloud-lab/pull/5), y ese merge lanzó el workflow `Web`.
 
 Los dos primeros intentos del trabajo de AWS fallaron con `AccessDenied … policy/voc-cancel-cred`. El laboratorio estaba parado, y Learner Lab asigna esa política al rol para denegarlo todo. Tras pulsar *Start Lab* y actualizar el secret, el tercer intento terminó en verde. El trabajo de AWS encontró el estado remoto creado en la Fase 2 y solo actualizó `index.html`:
 
@@ -94,7 +94,7 @@ El despliegue en AWS quedó en `skipped` y la web pública siguió mostrando la 
 | `2144944` Error a propósito | ❌ | ⏭️ sin ejecutar |
 | `02c17f6` Revert | ✅ | ✅ |
 
-El detalle de cada ejecución está en [`evidence/parte2/actions.md`](https://github.com/DavidTorro/aws-iam-governance-lab/blob/main/evidence/parte2/actions.md).
+El detalle de cada ejecución está en [`evidence/parte2/actions.md`](https://github.com/DavidTorro/aws-floci-cloud-lab/blob/main/evidence/parte2/actions.md).
 
 ## Limpieza
 
