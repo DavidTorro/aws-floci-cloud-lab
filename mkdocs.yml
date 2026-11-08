@@ -1,9 +1,9 @@
-site_name: AWS IAM Governance Lab
+site_name: AWS Floci Cloud Lab
 site_description: Gobernanza IAM y despliegue continuo de una web S3 con Terraform, Floci y AWS
 site_author: David Torró
-site_url: https://davidtorro.github.io/aws-iam-governance-lab/
-repo_url: https://github.com/DavidTorro/aws-iam-governance-lab
-repo_name: DavidTorro/aws-iam-governance-lab
+site_url: https://davidtorro.github.io/aws-floci-cloud-lab/
+repo_url: https://github.com/DavidTorro/aws-floci-cloud-lab
+repo_name: DavidTorro/aws-floci-cloud-lab
 edit_uri: ""
 
 theme:
@@ -45,9 +45,9 @@ plugins:
       lang: es
   - to-pdf:
       enabled_if_env: ENABLE_PDF_EXPORT
-      output_path: pdf/aws-iam-governance-lab.pdf
+      output_path: pdf/aws-floci-cloud-lab.pdf
       custom_template_path: pdf
-      cover_title: AWS IAM Governance Lab
+      cover_title: AWS Floci Cloud Lab
       cover_subtitle: Gobernanza IAM y despliegue continuo con Floci y AWS
       cover_logo: assets/favicon.svg
       author: David Torró

@@ -42,7 +42,7 @@ bash scripts/web-deploy.sh aws destroy    # Limpieza
 
 **Validación antes de desplegar.** El módulo exige un nombre de bucket válido y que existan `index.html` y `error.html`. Una web sin portada se detiene en el `plan`, antes de tocar ningún recurso.
 
-**El bucket lo crea el script.** En Learner Lab, una política de control de servicio (SCP) de la organización deniega `s3:GetBucketObjectLockConfiguration`. El recurso `aws_s3_bucket` del proveedor de Terraform lee siempre esa configuración después de crear el bucket, y en AWS real trata la denegación como un error fatal. El primer intento dejó el bucket creado pero marcado como *tainted* ([evidencia](https://github.com/DavidTorro/aws-iam-governance-lab/blob/main/evidence/parte2/2b-learner-lab-object-lock.txt)). Se comprobaron las demás lecturas del bucket y solo esa estaba denegada. Por eso `web-deploy.sh` crea el bucket con la AWS CLI, como el paso 1/4 del kit, y Terraform gestiona todo lo que va dentro.
+**El bucket lo crea el script.** En Learner Lab, una política de control de servicio (SCP) de la organización deniega `s3:GetBucketObjectLockConfiguration`. El recurso `aws_s3_bucket` del proveedor de Terraform lee siempre esa configuración después de crear el bucket, y en AWS real trata la denegación como un error fatal. El primer intento dejó el bucket creado pero marcado como *tainted* ([evidencia](https://github.com/DavidTorro/aws-floci-cloud-lab/blob/main/evidence/parte2/2b-learner-lab-object-lock.txt)). Se comprobaron las demás lecturas del bucket y solo esa estaba denegada. Por eso `web-deploy.sh` crea el bucket con la AWS CLI, como el paso 1/4 del kit, y Terraform gestiona todo lo que va dentro.
 
 ## Contenido
 
