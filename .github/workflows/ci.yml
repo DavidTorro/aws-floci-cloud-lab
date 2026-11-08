@@ -31,6 +31,16 @@ jobs:
         run: terraform -chdir=envs/floci validate
       - name: Tests de identidades
         run: terraform -chdir=envs/floci test
+      - name: Validar entornos de la web
+        run: |
+          for env in envs/web-floci envs/web-aws; do
+            terraform -chdir="$env" init -backend=false -input=false -lockfile=readonly
+            terraform -chdir="$env" validate
+          done
+      - name: Tests del módulo de la web
+        run: |
+          terraform -chdir=modules/s3-website init -backend=false -input=false
+          terraform -chdir=modules/s3-website test
 
   policies-json:
     name: Validar políticas JSON
