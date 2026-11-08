@@ -1,5 +1,5 @@
 site_name: AWS IAM Governance Lab
-site_description: Práctica de gobernanza de identidades con Floci y AWS CLI
+site_description: Gobernanza IAM y despliegue continuo de una web S3 con Terraform, Floci y AWS
 site_author: David Torró
 site_url: https://davidtorro.github.io/aws-iam-governance-lab/
 repo_url: https://github.com/DavidTorro/aws-iam-governance-lab
@@ -48,7 +48,7 @@ plugins:
       output_path: pdf/aws-iam-governance-lab.pdf
       custom_template_path: pdf
       cover_title: AWS IAM Governance Lab
-      cover_subtitle: Gobernanza de identidades y mínimo privilegio con Floci
+      cover_subtitle: Gobernanza IAM y despliegue continuo con Floci y AWS
       cover_logo: assets/favicon.svg
       author: David Torró
       toc_title: Índice
@@ -68,14 +68,20 @@ markdown_extensions:
 
 nav:
   - Inicio: index.md
-  - Entorno:
-      - Floci: entorno/floci.md
-      - Flujo de trabajo: entorno/flujo-de-trabajo.md
-  - Usuarios y grupos: usuarios-y-grupos.md
-  - Políticas:
-      - Dev-Team: politicas/dev-team.md
-      - Ops-Team: politicas/ops-team.md
-      - SecOps-Team: politicas/secops-team.md
-  - Auditoría: auditoria/simulador.md
-  - Decisiones: decisiones.md
+  - Parte 1 · IAM:
+      - Entorno:
+          - Floci: entorno/floci.md
+          - Flujo de trabajo: entorno/flujo-de-trabajo.md
+      - Usuarios y grupos: usuarios-y-grupos.md
+      - Políticas:
+          - Dev-Team: politicas/dev-team.md
+          - Ops-Team: politicas/ops-team.md
+          - SecOps-Team: politicas/secops-team.md
+      - Auditoría: auditoria/simulador.md
+      - Decisiones: decisiones.md
+  - Parte 2 · Despliegue:
+      - De local a la nube: parte-2/index.md
+      - Fases: parte-2/fases.md
+      - Comparativa: parte-2/comparativa.md
+      - Preguntas: parte-2/preguntas.md
   - Conclusiones: conclusiones.md

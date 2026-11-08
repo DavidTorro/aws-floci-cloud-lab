@@ -7,9 +7,13 @@
   <img src="https://img.shields.io/badge/-Amazon%20S3-569a31?style=for-the-badge" alt="Amazon S3">
   <img src="https://img.shields.io/badge/-Amazon%20EC2-ff9900?style=for-the-badge" alt="Amazon EC2">
   <img src="https://img.shields.io/badge/-Floci-25b7a4?style=for-the-badge" alt="Floci">
+  <img src="https://img.shields.io/badge/-GitHub%20Actions-2088ff?style=for-the-badge&logo=githubactions&logoColor=white" alt="GitHub Actions">
 <br>
   <a href="https://github.com/DavidTorro/aws-iam-governance-lab/actions/workflows/ci.yml">
     <img src="https://img.shields.io/badge/CI-GitHub%20Actions-2088ff?style=for-the-badge&logo=githubactions&logoColor=white" alt="CI en GitHub Actions">
+  </a>
+  <a href="https://github.com/DavidTorro/aws-iam-governance-lab/actions/workflows/web.yml">
+    <img src="https://img.shields.io/badge/web-Floci%20%E2%86%92%20AWS-ff9900?style=for-the-badge&logo=amazons3&logoColor=white" alt="Despliegue de la web">
   </a>
   <a href="https://davidtorro.github.io/aws-iam-governance-lab/">
     <img src="https://img.shields.io/badge/docs-MkDocs-526cfe?style=for-the-badge&logo=materialformkdocs&logoColor=white" alt="Documentación">
@@ -25,9 +29,12 @@
 
 # AWS IAM Governance Lab
 
-Práctica de gobernanza de identidades para NextGen Solutions resuelta como **infraestructura como código con Terraform**, siguiendo la organización de [aws-iam-security-lab](https://github.com/DavidTorro/aws-iam-security-lab). El proveedor AWS de Terraform apunta al emulador local [Floci](https://floci.io/). El simulador IAM verifica los permisos y se comprueba el carácter efímero del entorno.
+Práctica de NextGen Solutions en dos partes, resuelta como **infraestructura como código con Terraform** y siguiendo la organización de [aws-iam-security-lab](https://github.com/DavidTorro/aws-iam-security-lab):
 
-## Resultado de la práctica
+- **Parte 1 · IAM**: gobernanza de identidades en el emulador local [Floci](https://floci.io/). El simulador IAM verifica los permisos y se comprueba el carácter efímero del entorno.
+- **Parte 2 · Despliegue**: la web de la empresa se publica en S3. Cada cambio se prueba primero en Floci y GitHub Actions solo lo despliega en AWS Learner Lab si la prueba pasa.
+
+## Resultado de la Parte 1
 
 | Grupo | Usuarios | Permisos principales |
 | --- | --- | --- |
@@ -36,6 +43,16 @@ Práctica de gobernanza de identidades para NextGen Solutions resuelta como **in
 | SecOps-Team | `camila`, `alicia` | Lectura CloudTrail, CloudWatch Logs e IAM; denegación de operaciones destructivas |
 
 Las políticas están asociadas **solo a los grupos**. La [verificación real](./evidence/verification.md) comprobó las siete pertenencias, la ausencia de políticas directas y 23 decisiones del simulador para cuatro usuarios. El [estado Terraform](./evidence/terraform-state.txt) registra los 18 recursos gestionados. `s3:DeleteObject` para `alicia` devolvió `explicitDeny`. La [prueba de reinicio](./evidence/ephemeral.json) confirmó que, sin persistencia, los seis usuarios desaparecen al parar y arrancar Floci.
+
+## Resultado de la Parte 2
+
+| Entorno | Resultado |
+| --- | --- |
+| Floci | La web responde 200 con el nombre `nextgen` y sin permiso público |
+| AWS | `BucketAlreadyExists` con `nextgen`, 403 sin política pública y OK con `nextgen-david-torro` y `public_read = true` |
+| GitHub Actions | Un cambio correcto llega solo a producción; un commit sin `index.html` falla en Floci y el despliegue en AWS no se ejecuta |
+
+El módulo [`modules/s3-website`](./modules/s3-website) es el mismo en los tres sitios; [`envs/web-floci`](./envs/web-floci) y [`envs/web-aws`](./envs/web-aws) solo cambian el endpoint, las credenciales y el estado. En Learner Lab una SCP impide usar `aws_s3_bucket`, por lo que el bucket lo crea [`scripts/web-deploy.sh`](./scripts/web-deploy.sh). Los logs reales y las ejecuciones de Actions están en [`evidence/parte2`](./evidence/parte2).
 
 ## Requisitos y ejecución
 
@@ -68,6 +85,14 @@ bash scripts/check-ephemeral.sh
 cat evidence/ephemeral.json
 ```
 
+Para la web de la Parte 2, `config/web.tfvars` define el nombre del bucket y si es pública. AWS necesita las credenciales de Learner Lab en `~/.aws/credentials`, y GitHub Actions las toma del secret `AWS_CREDENTIALS`:
+
+```bash
+bash scripts/web-deploy.sh floci
+bash scripts/web-deploy.sh aws
+bash scripts/web-deploy.sh aws destroy
+```
+
 Después, `bash scripts/deploy.sh` detecta el estado vacío de Floci y reconstruye los recursos desde Terraform. Para comprobar manualmente a `alicia`:
 
 ```bash
@@ -81,7 +106,7 @@ aws iam simulate-principal-policy --policy-source-arn "$arn" \
 
 ## Memoria y PDF
 
-La [memoria técnica](./docs/index.md) explica los bloques JSON, la denegación explícita, la gobernanza por grupos, las simulaciones y la prueba de entorno efímero. Incluye imágenes de las políticas y de las respuestas del simulador, generadas a partir de los archivos y datos reales con `python3 scripts/render-evidence.py` (requiere ImageMagick en macOS).
+La [memoria técnica](./docs/index.md) explica los bloques JSON, la denegación explícita, la gobernanza por grupos, las simulaciones y la prueba de entorno efímero. En la Parte 2 recoge las fases del despliegue con sus capturas, la comparativa Floci/AWS y las respuestas sobre los límites del emulador, CI/CD y la gestión de secretos. Incluye imágenes de las políticas y de las respuestas del simulador, generadas a partir de los archivos y datos reales con `python3 scripts/render-evidence.py` (requiere ImageMagick en macOS).
 
 ```bash
 python3 -m venv .venv
@@ -90,19 +115,24 @@ python3 -m venv .venv
 ENABLE_PDF_EXPORT=1 .venv/bin/mkdocs build --strict
 ```
 
-El PDF generado queda en `site/pdf/aws-iam-governance-lab.pdf`; la [copia final de la memoria](./output/pdf/aws-iam-governance-lab.pdf) se incluye en el repositorio. GitHub Actions valida las políticas y la documentación; el despliegue de Pages se ejecuta manualmente desde `Documentación`.
+El PDF generado queda en `site/pdf/aws-iam-governance-lab.pdf`; la [copia final de la memoria](./output/pdf/aws-iam-governance-lab.pdf) se incluye en el repositorio. GitHub Actions valida Terraform, las políticas y la documentación; `Web` prueba y despliega la web, y el despliegue de Pages se ejecuta manualmente desde `Documentación`.
 
 ## Estructura
 
 ```text
 policies/                 Políticas JSON de los tres grupos
 modules/iam-group/        Módulo Terraform para grupo y política
-envs/floci/               Despliegue Terraform, lockfile y test
-scripts/                  Wrapper de Terraform, verificación y prueba de reinicio
-evidence/                 Respuestas reales del emulador
+envs/floci/               Despliegue IAM en Floci, lockfile y test
+web/                      Web de NextGen Solutions (Parte 2)
+config/web.tfvars         Nombre del bucket y lectura pública
+modules/s3-website/       Módulo Terraform del sitio web S3 y sus tests
+envs/web-floci/           Web en Floci (estado local)
+envs/web-aws/             Web en AWS (estado remoto en S3)
+scripts/                  Wrappers de Terraform, verificación y prueba de reinicio
+evidence/                 Respuestas reales de Floci, AWS y GitHub Actions
 docs/                     Memoria y capturas
 pdf/                      Plantilla y estilos del PDF
-.github/                  CI y despliegue manual de documentación
+.github/                  CI, despliegue de la web y de la documentación
 enunciados/               Enunciado original, conservado solo en local
 ```
 
