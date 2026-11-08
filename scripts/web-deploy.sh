@@ -39,7 +39,14 @@ if [ "$DESTINO" = "aws" ]; then
   # Estado remoto: GitHub Actions arranca cada vez en un equipo limpio.
   CUENTA="$(aws sts get-caller-identity --query Account --output text)"
   STATE_BUCKET="nextgen-tfstate-$CUENTA"
-  if ! aws s3api head-bucket --bucket "$STATE_BUCKET" >/dev/null 2>&1; then
+  if ! SALIDA="$(aws s3api head-bucket --bucket "$STATE_BUCKET" 2>&1)"; then
+    # Solo se crea si no existe (404). Un 403 suele indicar credenciales
+    # caducadas o un laboratorio parado (política voc-cancel-cred).
+    if ! grep -q '404' <<<"$SALIDA"; then
+      echo "ERROR: no se puede acceder al bucket del estado. ¿Credenciales caducadas o laboratorio parado?" >&2
+      echo "$SALIDA" >&2
+      exit 1
+    fi
     echo "Creando el bucket del estado de Terraform"
     aws s3api create-bucket --bucket "$STATE_BUCKET" >/dev/null
     aws s3api put-bucket-versioning --bucket "$STATE_BUCKET" \
