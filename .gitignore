@@ -32,3 +32,6 @@ crash.log
 .idea/
 .vscode/
 *.swp
+
+# Lockfile generado al probar el módulo suelto (el de los entornos sí se versiona)
+modules/**/.terraform.lock.hcl

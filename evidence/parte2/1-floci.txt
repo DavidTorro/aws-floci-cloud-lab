@@ -1,0 +1,144 @@
+== Destino: FLOCI (http://localhost:4566) ==
+Bucket: nextgen
+make_bucket: nextgen
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # module.website.aws_s3_bucket_public_access_block.this will be created
+  + resource "aws_s3_bucket_public_access_block" "this" {
+      + block_public_acls       = true
+      + block_public_policy     = true
+      + bucket                  = "nextgen"
+      + id                      = (known after apply)
+      + ignore_public_acls      = true
+      + region                  = "us-east-1"
+      + restrict_public_buckets = true
+    }
+
+  # module.website.aws_s3_bucket_website_configuration.this will be created
+  + resource "aws_s3_bucket_website_configuration" "this" {
+      + bucket           = "nextgen"
+      + id               = (known after apply)
+      + region           = "us-east-1"
+      + routing_rules    = (known after apply)
+      + website_domain   = (known after apply)
+      + website_endpoint = (known after apply)
+
+      + error_document {
+          + key = "error.html"
+        }
+
+      + index_document {
+          + suffix = "index.html"
+        }
+
+      + routing_rule (known after apply)
+    }
+
+  # module.website.aws_s3_object.web["error.html"] will be created
+  + resource "aws_s3_object" "web" {
+      + acl                    = (known after apply)
+      + arn                    = (known after apply)
+      + bucket                 = "nextgen"
+      + bucket_key_enabled     = (known after apply)
+      + checksum_crc32         = (known after apply)
+      + checksum_crc32c        = (known after apply)
+      + checksum_crc64nvme     = (known after apply)
+      + checksum_sha1          = (known after apply)
+      + checksum_sha256        = (known after apply)
+      + content_type           = "text/html; charset=utf-8"
+      + etag                   = "44e71e2fc0769fdbde46beb2fdddb7c9"
+      + force_destroy          = false
+      + id                     = (known after apply)
+      + key                    = "error.html"
+      + kms_key_id             = (known after apply)
+      + region                 = "us-east-1"
+      + server_side_encryption = (known after apply)
+      + source                 = "./../../web/error.html"
+      + storage_class          = (known after apply)
+      + tags_all               = (known after apply)
+      + version_id             = (known after apply)
+    }
+
+  # module.website.aws_s3_object.web["estilos.css"] will be created
+  + resource "aws_s3_object" "web" {
+      + acl                    = (known after apply)
+      + arn                    = (known after apply)
+      + bucket                 = "nextgen"
+      + bucket_key_enabled     = (known after apply)
+      + checksum_crc32         = (known after apply)
+      + checksum_crc32c        = (known after apply)
+      + checksum_crc64nvme     = (known after apply)
+      + checksum_sha1          = (known after apply)
+      + checksum_sha256        = (known after apply)
+      + content_type           = "text/css; charset=utf-8"
+      + etag                   = "08397759adf218835729b2e28246dbfa"
+      + force_destroy          = false
+      + id                     = (known after apply)
+      + key                    = "estilos.css"
+      + kms_key_id             = (known after apply)
+      + region                 = "us-east-1"
+      + server_side_encryption = (known after apply)
+      + source                 = "./../../web/estilos.css"
+      + storage_class          = (known after apply)
+      + tags_all               = (known after apply)
+      + version_id             = (known after apply)
+    }
+
+  # module.website.aws_s3_object.web["index.html"] will be created
+  + resource "aws_s3_object" "web" {
+      + acl                    = (known after apply)
+      + arn                    = (known after apply)
+      + bucket                 = "nextgen"
+      + bucket_key_enabled     = (known after apply)
+      + checksum_crc32         = (known after apply)
+      + checksum_crc32c        = (known after apply)
+      + checksum_crc64nvme     = (known after apply)
+      + checksum_sha1          = (known after apply)
+      + checksum_sha256        = (known after apply)
+      + content_type           = "text/html; charset=utf-8"
+      + etag                   = "c2a4e103bc25c33be9d2478d34dda2bd"
+      + force_destroy          = false
+      + id                     = (known after apply)
+      + key                    = "index.html"
+      + kms_key_id             = (known after apply)
+      + region                 = "us-east-1"
+      + server_side_encryption = (known after apply)
+      + source                 = "./../../web/index.html"
+      + storage_class          = (known after apply)
+      + tags_all               = (known after apply)
+      + version_id             = (known after apply)
+    }
+
+Plan: 5 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + bucket       = "nextgen"
+  + check_url    = "http://localhost:4566/"
+  + website_host = "nextgen.s3-website-us-east-1.localhost:4566"
+  + website_url  = "http://nextgen.s3-website-us-east-1.localhost:4566/"
+module.website.aws_s3_bucket_public_access_block.this: Creating...
+module.website.aws_s3_bucket_website_configuration.this: Creating...
+module.website.aws_s3_object.web["estilos.css"]: Creating...
+module.website.aws_s3_object.web["index.html"]: Creating...
+module.website.aws_s3_object.web["error.html"]: Creating...
+module.website.aws_s3_object.web["index.html"]: Creation complete after 0s [id=nextgen/index.html]
+module.website.aws_s3_bucket_public_access_block.this: Creation complete after 0s [id=nextgen]
+module.website.aws_s3_object.web["error.html"]: Creation complete after 0s [id=nextgen/error.html]
+module.website.aws_s3_bucket_website_configuration.this: Creation complete after 0s [id=nextgen]
+module.website.aws_s3_object.web["estilos.css"]: Creation complete after 0s [id=nextgen/estilos.css]
+
+Apply complete! Resources: 5 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+bucket = "nextgen"
+check_url = "http://localhost:4566/"
+website_host = "nextgen.s3-website-us-east-1.localhost:4566"
+website_url = "http://nextgen.s3-website-us-east-1.localhost:4566/"
+Comprobando que la web responde...
+OK. Tu web está en: http://nextgen.s3-website-us-east-1.localhost:4566/

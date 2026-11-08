@@ -1,0 +1,66 @@
+name: Web
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - web/**
+      - config/**
+      - modules/s3-website/**
+      - envs/web-floci/**
+      - envs/web-aws/**
+      - scripts/web-deploy.sh
+      - .github/workflows/web.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Nunca dos despliegues a la vez sobre el mismo estado.
+concurrency:
+  group: web
+  cancel-in-progress: false
+
+jobs:
+  probar:
+    name: 1. Prueba en Floci
+    runs-on: ubuntu-latest
+    services:
+      floci:
+        image: floci/floci:latest
+        ports:
+          - 4566:4566
+    steps:
+      - uses: actions/checkout@v7
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: "1.17.0"
+          terraform_wrapper: false
+      - name: Esperar a que Floci arranque
+        run: |
+          for i in $(seq 1 30); do
+            curl -s -o /dev/null http://localhost:4566/ && exit 0
+            sleep 2
+          done
+          exit 1
+      - name: Desplegar en Floci
+        run: bash scripts/web-deploy.sh floci
+
+  desplegar:
+    name: 2. Despliegue en AWS
+    needs: probar
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: "1.17.0"
+          terraform_wrapper: false
+      - name: Cargar las credenciales de Learner Lab
+        env:
+          AWS_CREDENTIALS: ${{ secrets.AWS_CREDENTIALS }}
+        run: |
+          mkdir -p ~/.aws
+          printf '%s\n' "$AWS_CREDENTIALS" > ~/.aws/credentials
+      - name: Desplegar en AWS
+        run: bash scripts/web-deploy.sh aws

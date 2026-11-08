@@ -1,0 +1,60 @@
+== Destino: AWS REAL (us-east-1) ==
+Bucket: nextgen-david-torro
+module.website.aws_s3_bucket_public_access_block.this: Refreshing state... [id=nextgen-david-torro]
+module.website.aws_s3_bucket_website_configuration.this: Refreshing state... [id=nextgen-david-torro]
+module.website.aws_s3_object.web["estilos.css"]: Refreshing state... [id=nextgen-david-torro/estilos.css]
+module.website.aws_s3_object.web["error.html"]: Refreshing state... [id=nextgen-david-torro/error.html]
+module.website.aws_s3_object.web["index.html"]: Refreshing state... [id=nextgen-david-torro/index.html]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # module.website.aws_s3_bucket_policy.public_read[0] will be created
+  + resource "aws_s3_bucket_policy" "public_read" {
+      + bucket = "nextgen-david-torro"
+      + id     = (known after apply)
+      + policy = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "s3:GetObject"
+                      + Effect    = "Allow"
+                      + Principal = "*"
+                      + Resource  = "arn:aws:s3:::nextgen-david-torro/*"
+                      + Sid       = "LecturaPublica"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + region = "us-east-1"
+    }
+
+  # module.website.aws_s3_bucket_public_access_block.this will be updated in-place
+  ~ resource "aws_s3_bucket_public_access_block" "this" {
+      ~ block_public_policy     = true -> false
+        id                      = "nextgen-david-torro"
+      ~ restrict_public_buckets = true -> false
+        # (4 unchanged attributes hidden)
+    }
+
+Plan: 1 to add, 1 to change, 0 to destroy.
+module.website.aws_s3_bucket_public_access_block.this: Modifying... [id=nextgen-david-torro]
+module.website.aws_s3_bucket_public_access_block.this: Modifications complete after 1s [id=nextgen-david-torro]
+module.website.aws_s3_bucket_policy.public_read[0]: Creating...
+module.website.aws_s3_bucket_policy.public_read[0]: Creation complete after 0s [id=nextgen-david-torro]
+
+Apply complete! Resources: 1 added, 1 changed, 0 destroyed.
+
+Outputs:
+
+bucket = "nextgen-david-torro"
+check_url = "http://nextgen-david-torro.s3-website-us-east-1.amazonaws.com/"
+website_host = "nextgen-david-torro.s3-website-us-east-1.amazonaws.com"
+website_url = "http://nextgen-david-torro.s3-website-us-east-1.amazonaws.com/"
+Comprobando que la web responde...
+OK. Tu web está en: http://nextgen-david-torro.s3-website-us-east-1.amazonaws.com/
