@@ -1,0 +1,3 @@
+== Destino: AWS REAL (us-east-1) ==
+Bucket: nextgen
+make_bucket failed: s3://nextgen An error occurred (BucketAlreadyExists) when calling the CreateBucket operation: The requested bucket name is not available. The bucket namespace is shared by all users of the system. Please select a different name and try again.
